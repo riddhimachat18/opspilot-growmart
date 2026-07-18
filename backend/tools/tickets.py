@@ -33,8 +33,10 @@ def create_ticket(
         transcript: List of {role, text} dicts from this conversation.
         trace:      List of trace event dicts from this turn.
     """
-    # Map internal user_id to the demo user — in production, use the real user_id
-    safe_user_id = user_id if user_id and user_id != "anonymous" else "user-aditi"
+    # For the demo, only user-aditi exists in the users table.
+    # Any unknown user_id (demo-user, anonymous, etc.) maps to user-aditi.
+    KNOWN_USERS = {"user-aditi"}
+    safe_user_id = user_id if user_id in KNOWN_USERS else "user-aditi"
 
     tid = db.add_ticket(
         user_id=safe_user_id,

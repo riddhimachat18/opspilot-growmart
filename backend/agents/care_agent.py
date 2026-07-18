@@ -296,11 +296,13 @@ def care_agent_node(state: AgentState, config: dict = None, *, store=None) -> di
                 "detail": f"Ticket {ticket['ticket_id']} created",
             })
         except Exception as e:
-            # Don't crash the agent turn if ticket creation fails
+            import traceback
+            error_detail = traceback.format_exc()
             trace_events.append({
                 "agent": "care_agent", "action": "create_ticket",
-                "status": "error", "detail": str(e),
+                "status": "error", "detail": f"Ticket creation failed: {str(e)}",
             })
+            print(f"[care_agent] ticket creation error: {error_detail}")
 
         trace_events.append({
             "agent": "care_agent", "action": "escalate",

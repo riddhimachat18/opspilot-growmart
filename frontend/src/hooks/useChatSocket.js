@@ -204,7 +204,7 @@ export function useChatSocket() {
         JSON.stringify({
           message:    text,
           session_id: sessionIdRef.current,
-          user_id:    'demo-user',
+          user_id:    'user-aditi',
         })
       );
     },

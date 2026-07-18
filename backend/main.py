@@ -409,7 +409,7 @@ async def chat_websocket(websocket: WebSocket):
                     # Build a one-line summary from the user's message
                     summary = user_message[:120] if user_message else "Conversation"
 
-                    safe_user_id = user_id if user_id and user_id != "anonymous" else USER_ID
+                    safe_user_id = user_id if user_id in {"user-aditi"} else USER_ID
                     db.add_chat_history(
                         user_id=safe_user_id,
                         summary=summary,
