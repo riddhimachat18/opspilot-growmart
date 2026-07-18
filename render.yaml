@@ -2,18 +2,11 @@ services:
   - type: web
     name: opspilot-backend
     runtime: python
-    region: singapore          # closest to India
+    region: singapore
     plan: free
     rootDir: .
-    buildCommand: pip install -r backend/requirements.txt
+    buildCommand: pip install -r backend/requirements.txt && python -m backend.ingestion.ingest_kb
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: "3.11"
-      # All secrets are set in the Render dashboard, not here.
-      # Add every key from .env as an environment variable in Render:
-      #   GEMINI_API_KEY, GOOGLE_API_KEY,
-      #   AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME, AIRTABLE_VIEW_ID,
-      #   GOOGLE_SERVICE_ACCOUNT_FILE (see note below),
-      #   GOOGLE_CALENDAR_ID,
-      #   SUPABASE_URL, SUPABASE_SERVICE_KEY
