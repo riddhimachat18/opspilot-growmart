@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  /* ─── Admin / OpsPilot dark theme ─── */
+  :root {
+    --op-base:    #0B0E14;
+    --op-surface: #111621;
+    --op-raised:  #181E2C;
+    --op-overlay: #1E2538;
+    --op-border:  rgba(255,255,255,0.07);
+    --op-border2: rgba(255,255,255,0.12);
+
+    --op-ink-1: #F0F4FF;
+    --op-ink-2: #9BAAC4;
+    --op-ink-3: #556073;
+    --op-ink-4: #2E3A4A;
+
+    --op-accent:       #4F6EF7;
+    --op-accent-dim:   rgba(79,110,247,0.15);
+    --op-accent-glow:  rgba(79,110,247,0.08);
+
+    /* Agent palette (on dark) */
+    --op-orchestrator: #8899BB;
+    --op-sales:        #4F6EF7;
+    --op-support:      #34D399;
+    --op-care:         #C084FC;
+    --op-scheduling:   #FBBF24;
+  }
+
+  /* ─── GrowMart storefront light theme ─── */
+  .gm-theme {
+    --gm-base:    #FAFAF8;
+    --gm-surface: #FFFFFF;
+    --gm-panel:   #F3F1EC;
+    --gm-border:  #E5E2DC;
+    --gm-border2: #CCC9C2;
+
+    --gm-ink-1: #1A1410;
+    --gm-ink-2: #4A3F35;
+    --gm-ink-3: #8C7B6E;
+    --gm-ink-4: #B8AFA6;
+
+    --gm-accent:      #E8520A;
+    --gm-accent-dim:  #FEF0E8;
+    --gm-accent-dark: #C2400A;
+  }
+
+  /* ─── Admin light theme (for admin light areas) ─── */
+  .admin-theme {
+    --bg-base:     #F5F7FA;
+    --bg-surface:  #FFFFFF;
+    --bg-panel:    #EEF1F6;
+    --border:      #DDE2EA;
+    --border-subtle: #EBEEF4;
+    --ink-1:  #0F1623;
+    --ink-2:  #3D4A5C;
+    --ink-3:  #7A8999;
+    --ink-4:  #A8B4C2;
+    --accent:       #4F6EF7;
+    --accent-light: #EEF1FF;
+    --accent-mid:   #C0CAFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(128,128,128,0.2); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(128,128,128,0.35); }
+
+  :focus-visible { outline: 2px solid #4F6EF7; outline-offset: 2px; border-radius: 4px; }
+}
+
+@layer utilities {
+  .font-display { font-family: 'DM Sans', system-ui, sans-serif; letter-spacing: -0.025em; }
+  .font-mono    { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+
+  /* ── Op dark trace rules (colored left border — the signature) ── */
+  .trace-rule-orchestrator { border-left: 2px solid var(--op-orchestrator); }
+  .trace-rule-sales        { border-left: 2px solid var(--op-sales); }
+  .trace-rule-support      { border-left: 2px solid var(--op-support); }
+  .trace-rule-care         { border-left: 2px solid var(--op-care); }
+  .trace-rule-scheduling   { border-left: 2px solid var(--op-scheduling); }
+  .trace-rule-default      { border-left: 2px solid var(--op-border2); }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up { animation: fadeUp 0.18s ease forwards; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .animate-fade-in { animation: fadeIn 0.3s ease forwards; }
+
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.3; transform: scale(0.65); }
+  }
+  .animate-pulse-dot { animation: pulseDot 1.5s ease-in-out infinite; }
+
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .animate-cursor { animation: cursorBlink 0.75s step-end infinite; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .animate-spin { animation: spin 0.75s linear infinite; }
+
+  /* Ticker scroll for marketing hero */
+  @keyframes tickerScroll {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+  .animate-ticker { animation: tickerScroll 14s linear infinite; }
+
+  /* Widget slide up */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .animate-slide-up { animation: slideUp 0.22s ease forwards; }
+
+  /* Refund coin — rises and fades, used when a refund lands */
+  @keyframes refundRise {
+    0%   { opacity: 0; transform: translateY(0) scale(0.7); }
+    15%  { opacity: 1; transform: translateY(-8px) scale(1.1); }
+    70%  { opacity: 1; transform: translateY(-28px) scale(1); }
+    100% { opacity: 0; transform: translateY(-44px) scale(0.9); }
+  }
+  .animate-refund-rise { animation: refundRise 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+}

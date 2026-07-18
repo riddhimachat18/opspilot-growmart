@@ -1,0 +1,45 @@
+# ── Secrets — never commit ─────────────────────────────────────────────────
+.env
+*.env
+!.env.example
+!.env.production.example
+!frontend/.env.local
+!frontend/.env.production.example
+
+# Google service account key
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!vercel.json
+
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+myenv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── LangGraph persistence (local only) ──────────────────────────────────────
+backend/checkpoints.db
+backend/long_term_memory.db
+backend/growmart.db
+backend/orders.db
+backend/chroma_db/
+
+# ── Node / Frontend ──────────────────────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
