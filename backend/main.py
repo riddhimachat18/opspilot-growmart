@@ -64,6 +64,28 @@ async def health_check():
     return {"status": "ok"}
 
 
+@app.on_event("startup")
+async def keep_alive():
+    """Ping /health every 10 minutes to prevent Render free tier sleep."""
+    import asyncio, httpx, os
+    async def _ping():
+        # Only run on Render (not locally)
+        if not os.getenv("RENDER"):
+            return
+        await asyncio.sleep(60)  # wait for full startup first
+        host = os.getenv("RENDER_EXTERNAL_URL", "")
+        if not host:
+            return
+        async with httpx.AsyncClient() as client:
+            while True:
+                try:
+                    await client.get(f"{host}/health", timeout=10)
+                except Exception:
+                    pass
+                await asyncio.sleep(600)  # 10 minutes
+    asyncio.create_task(_ping())
+
+
 # ── REST API ─────────────────────────────────────────────────────────────────
 # All routes use user_id = "user-aditi" for the demo.
 # In production, read user_id from a session/JWT.
