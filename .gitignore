@@ -32,7 +32,7 @@ backend/checkpoints.db
 backend/long_term_memory.db
 backend/growmart.db
 backend/orders.db
-backend/chroma_db/
+# chroma_db is committed — it's a pre-built index, not a secret
 
 # ── Node / Frontend ──────────────────────────────────────────────────────────
 node_modules/

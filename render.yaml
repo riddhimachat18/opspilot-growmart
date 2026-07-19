@@ -5,7 +5,7 @@ services:
     region: singapore
     plan: free
     rootDir: .
-    buildCommand: pip install -r backend/requirements.txt && python -m backend.ingestion.ingest_kb
+    buildCommand: pip install -r backend/requirements.txt && python -m backend.ingestion.ingest_kb || echo "KB ingestion skipped (chroma_db already present)"
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
