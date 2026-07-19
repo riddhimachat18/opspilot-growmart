@@ -11,25 +11,21 @@ the LLM decides when to call it based on the tool's docstring below.
 import os
 from functools import lru_cache
 from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+EMBEDDING_MODEL_NAME = "models/gemini-embedding-001"
 COLLECTION_NAME = "growmart_kb"
 
 
 @lru_cache(maxsize=1)
 def _get_vector_store() -> Chroma:
-    """
-    Load the vector store once and cache it for the process lifetime.
-    Raises FileNotFoundError if the chroma_db directory doesn't exist.
-    """
     persist_dir = os.path.join(os.path.dirname(__file__), "..", "chroma_db")
     if not os.path.isdir(persist_dir):
         raise FileNotFoundError(
             f"No vector store found at {persist_dir}. "
             "Run `python -m backend.ingestion.ingest_kb` to build it."
         )
-    embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
+    embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL_NAME)
     return Chroma(
         persist_directory=persist_dir,
         embedding_function=embeddings,
